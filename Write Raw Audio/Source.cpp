@@ -32,38 +32,6 @@ private:
 	float amplitude; 
 };
 
-void WriteAFrequency(ofstream& output)
-{
-	int duration = 2;
-	NoiseMaker noiseMaker(440, .5);
-	output.open("wav", ios::binary);
-	auto maxAmplitude = pow(2, bitDepth - 1) - 1;
-	for (int i = 0; i < sampleRate; i++)
-	{
-		float yValue = noiseMaker.YCoordinates();
-		int intYValue = static_cast<int>(yValue * maxAmplitude);
-		output.write(reinterpret_cast<char*> (&intYValue), 2);
-	}
-	output.close();
-}
-
-
-void WriteEFrequency(ofstream& output)
-{
-	int duration = 2;
-	NoiseMaker noiseMaker(659.25, .5);
-	output.open("wav", ios::binary);
-	auto maxAmplitude = pow(2, bitDepth - 1) - 1;
-	for (int i = 0; i < sampleRate; i++)
-	{
-		float yValue = noiseMaker.YCoordinates();
-		int intYValue = static_cast<int>(yValue * maxAmplitude);
-		output.write(reinterpret_cast<char*> (&intYValue), 2);
-	}
-	output.close();
-}
-
-
 
 int main()
 {
