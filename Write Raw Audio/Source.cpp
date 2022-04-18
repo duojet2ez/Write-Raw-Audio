@@ -32,31 +32,247 @@ private:
 	float amplitude; 
 };
 
-
-int main()
+void WriteAFrequency(ofstream& output)
 {
 	int duration = 2;
-	NoiseMaker noiseMaker(440, .5); 
-	ofstream audioOutput; 
-	audioOutput.open("wav", ios::binary); 
-	auto maxAmplitude = pow(2, bitDepth - 1) - 1; 
-	for (int i = 0; i < sampleRate; i++)
-	{
-		float yValue = noiseMaker.YCoordinates(); 
-		int intYValue = static_cast<int>(yValue * maxAmplitude); 
-		audioOutput.write(reinterpret_cast<char*> (&intYValue), 2); 
-	}
-	for (int i = 0; i < sampleRate; i++)
-	{
-		int yValue = noiseMaker.Silence(); 
-		audioOutput.write(reinterpret_cast<char*> (&yValue), 2);
-	}
+	NoiseMaker noiseMaker(440, .5);
+	output.open("wav", ios::binary);
+	auto maxAmplitude = pow(2, bitDepth - 1) - 1;
 	for (int i = 0; i < sampleRate; i++)
 	{
 		float yValue = noiseMaker.YCoordinates();
 		int intYValue = static_cast<int>(yValue * maxAmplitude);
-		audioOutput.write(reinterpret_cast<char*> (&intYValue), 2);
+		output.write(reinterpret_cast<char*> (&intYValue), 2);
 	}
-	audioOutput.close(); 
+	output.close();
+}
+
+
+void WriteEFrequency(ofstream& output)
+{
+	int duration = 2;
+	NoiseMaker noiseMaker(659.25, .5);
+	output.open("wav", ios::binary);
+	auto maxAmplitude = pow(2, bitDepth - 1) - 1;
+	for (int i = 0; i < sampleRate; i++)
+	{
+		float yValue = noiseMaker.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		output.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+	output.close();
+}
+
+
+
+int main()
+{
+	ofstream audioFile; 
+	int duration = 2;
+	
+	NoiseMaker noiseMaker(440, .5);              //a 440
+	NoiseMaker noiseMakerE(659.25, .5);        //E
+	NoiseMaker noiseMakerFSharp(739.99, .5);   //f#
+	NoiseMaker noiseMakerD(587.33, .5);     //D
+	NoiseMaker noiseMakerCSharp(554.37, .5);   //C# 
+	NoiseMaker noiseMakerB(493.88, .5);           //B 
+
+	audioFile.open("wav", ios::binary);
+	auto maxAmplitude = pow(2, bitDepth - 1) - 1;
+	
+	//plays a 440 
+	for (int i = 0; i < sampleRate/2; i++)
+	{
+		float yValue = noiseMaker.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate/2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays a 440 
+	for (int i = 0; i < sampleRate/2; i++)
+	{
+		float yValue = noiseMaker.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays E
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerE.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays E
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerE.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays F#
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerFSharp.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays F#
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerFSharp.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays E
+	for (int i = 0; i < sampleRate * 2; i++)
+	{
+		float yValue = noiseMakerE.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//plays D
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerD.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays D
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerD.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays c#
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerCSharp.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+
+	//plays c#
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerCSharp.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+	//plays B
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerB.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+	//plays B
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		float yValue = noiseMakerB.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+	//1 second of silence
+	for (int i = 0; i < sampleRate / 2; i++)
+	{
+		int silence = noiseMaker.Silence();
+		audioFile.write(reinterpret_cast<char*> (&silence), 2);
+	}
+	//plays a 440 
+	for (int i = 0; i < sampleRate * 2; i++)
+	{
+		float yValue = noiseMaker.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioFile.write(reinterpret_cast<char*> (&intYValue), 2);
+	}
+ 
+	audioFile.close();
+
+
 	return 0; 
 }
