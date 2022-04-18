@@ -23,6 +23,10 @@ public:
 		offset += offsetAmount; 
 		return yCoordinate; 
 	}
+	int Silence()
+	{
+		return 0; 
+	}
 private:
 	float frequency;
 	float amplitude; 
@@ -36,11 +40,22 @@ int main()
 	ofstream audioOutput; 
 	audioOutput.open("wav", ios::binary); 
 	auto maxAmplitude = pow(2, bitDepth - 1) - 1; 
-	for (int i = 0; i < sampleRate * duration; i++)
+	for (int i = 0; i < sampleRate; i++)
 	{
 		float yValue = noiseMaker.YCoordinates(); 
 		int intYValue = static_cast<int>(yValue * maxAmplitude); 
 		audioOutput.write(reinterpret_cast<char*> (&intYValue), 2); 
+	}
+	for (int i = 0; i < sampleRate; i++)
+	{
+		int yValue = noiseMaker.Silence(); 
+		audioOutput.write(reinterpret_cast<char*> (&yValue), 2);
+	}
+	for (int i = 0; i < sampleRate; i++)
+	{
+		float yValue = noiseMaker.YCoordinates();
+		int intYValue = static_cast<int>(yValue * maxAmplitude);
+		audioOutput.write(reinterpret_cast<char*> (&intYValue), 2);
 	}
 	audioOutput.close(); 
 	return 0; 
